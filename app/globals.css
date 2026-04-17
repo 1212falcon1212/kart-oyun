@@ -172,6 +172,13 @@ html.light .scroll-smooth::-webkit-scrollbar-thumb {
 .hover\:bg-soft-3:hover { background-color: color-mix(in srgb, var(--cream) 10%, transparent); }
 .hover\:border-soft-3:hover { border-color: color-mix(in srgb, var(--cream) 30%, transparent); }
 
+/* iOS PWA safe-area — notch/Dynamic Island/home indicator altına girmesin */
+.safe-top { padding-top: max(2rem, calc(env(safe-area-inset-top) + 1rem)); }
+.safe-bottom { padding-bottom: max(2rem, calc(env(safe-area-inset-bottom) + 1rem)); }
+@media (min-width: 768px) {
+  .safe-top { padding-top: max(3rem, calc(env(safe-area-inset-top) + 1rem)); }
+}
+
 @keyframes pulseRing {
   0% {
     box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.5);

@@ -116,7 +116,7 @@ export default function KivilcimApp() {
   return (
     <div className="min-h-screen bg-ink text-cream font-body grain relative overflow-hidden">
       <div className="noise absolute inset-0 pointer-events-none" />
-      <div className="relative max-w-2xl mx-auto px-5 py-8 md:py-12">
+      <div className="relative max-w-2xl mx-auto px-5 pb-8 md:pb-12 safe-top safe-bottom">
         {view === "home" && (
           <Home
             setView={setView}
@@ -1187,12 +1187,14 @@ function Manage({
 // -----------------------------------------------------------------------------
 function TopBar({ onBack }: { onBack: () => void }) {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between gap-2">
       <button
-        onClick={() => { sfx.tap(); onBack(); }}
-        className="flex items-center gap-2 text-mute hover:text-cream transition text-sm"
+        onClick={() => { sfx.tap(); vibrate(10); onBack(); }}
+        aria-label="Ana menü"
+        className="flex items-center gap-2 rounded-xl border border-soft bg-soft px-4 py-2.5 text-sm text-cream hover:bg-soft-2 active:scale-95 transition min-h-[44px]"
       >
-        <ArrowLeft className="w-4 h-4" /> Ana menü
+        <ArrowLeft className="w-4 h-4" />
+        <span className="font-medium">Ana menü</span>
       </button>
       <div className="flex items-center gap-1.5 text-mute text-xs tracking-[0.2em] uppercase">
         <Flame className="w-3.5 h-3.5 text-orange-400" /> Kıvılcım
