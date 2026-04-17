@@ -3,8 +3,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import {
   Plus, Trash2, Pencil, ArrowLeft, Play, Flame,
-  Users, HelpCircle, Check, X, RotateCcw, ChevronRight,
-  BookOpen, ArrowRight, PartyPopper, Volume2, VolumeX,
+  Check, X, RotateCcw, ChevronRight,
+  ArrowRight, PartyPopper, Volume2, VolumeX,
   Sun, Moon, Timer, Download, Upload, Filter,
 } from "lucide-react";
 import {
@@ -17,7 +17,7 @@ import {
 import { storage, KEYS } from "@/lib/storage";
 import { sfx, vibrate, soundEnabled, setSoundEnabled } from "@/lib/sound";
 
-type View = "home" | "setup" | "game" | "manage" | "help";
+type View = "home" | "setup" | "game" | "manage";
 type Theme = "dark" | "light";
 type TimerOpt = 0 | 30 | 60;
 
@@ -153,7 +153,6 @@ export default function KivilcimApp() {
             setView={setView}
           />
         )}
-        {view === "help" && <Help setView={setView} />}
       </div>
     </div>
   );
@@ -177,19 +176,13 @@ function Home({
 }) {
   return (
     <div className="min-h-[85vh] flex flex-col justify-between float-in">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-mute text-sm">
-          <Flame className="w-4 h-4 text-orange-400" />
-          <span className="tracking-[0.2em] uppercase">Arkadaş ortamı</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <IconToggle onClick={toggleSound} label={sound ? "Sesi kapat" : "Sesi aç"}>
-            {sound ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-          </IconToggle>
-          <IconToggle onClick={toggleTheme} label={theme === "dark" ? "Açık tema" : "Koyu tema"}>
-            {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </IconToggle>
-        </div>
+      <div className="flex items-center justify-end gap-1.5">
+        <IconToggle onClick={toggleSound} label={sound ? "Sesi kapat" : "Sesi aç"}>
+          {sound ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+        </IconToggle>
+        <IconToggle onClick={toggleTheme} label={theme === "dark" ? "Açık tema" : "Koyu tema"}>
+          {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        </IconToggle>
       </div>
 
       <div className="py-16 md:py-24">
@@ -199,10 +192,6 @@ function Home({
             CIM
           </span>
         </h1>
-        <p className="mt-6 text-mute text-lg max-w-md leading-relaxed">
-          Telefon elden ele dolaşır. Sırası gelen kart çeker, soruyu dürüstçe cevaplar.
-          100 soru, ortamı kızıştırmaya hazır.
-        </p>
       </div>
 
       <div className="space-y-3">
@@ -216,22 +205,13 @@ function Home({
           </div>
         </button>
 
-        <div className="grid grid-cols-2 gap-3">
-          <button
-            onClick={() => { sfx.tap(); setView("manage"); }}
-            className="flex items-center justify-between rounded-2xl border border-soft bg-soft px-5 py-4 hover:bg-soft-2 transition"
-          >
-            <span className="font-semibold">Kartları Düzenle</span>
-            <Pencil className="w-4 h-4 text-mute" />
-          </button>
-          <button
-            onClick={() => { sfx.tap(); setView("help"); }}
-            className="flex items-center justify-between rounded-2xl border border-soft bg-soft px-5 py-4 hover:bg-soft-2 transition"
-          >
-            <span className="font-semibold">Nasıl Oynanır</span>
-            <HelpCircle className="w-4 h-4 text-mute" />
-          </button>
-        </div>
+        <button
+          onClick={() => { sfx.tap(); setView("manage"); }}
+          className="w-full flex items-center justify-between rounded-2xl border border-soft bg-soft px-5 py-4 hover:bg-soft-2 transition"
+        >
+          <span className="font-semibold">Kartları Düzenle</span>
+          <Pencil className="w-4 h-4 text-mute" />
+        </button>
       </div>
     </div>
   );
@@ -1206,75 +1186,6 @@ function Manage({
             </div>
           );
         })}
-      </div>
-    </div>
-  );
-}
-
-// -----------------------------------------------------------------------------
-// Help
-// -----------------------------------------------------------------------------
-function Help({ setView }: { setView: (v: View) => void }) {
-  const steps = [
-    {
-      icon: Users,
-      title: "Oyuncuları gir",
-      text: "2 ila 8 kişi. Herkes adını ekler, sıra ona göre döner.",
-    },
-    {
-      icon: Filter,
-      title: "Kategori ve süre seç",
-      text: "Hangi soruların çıkacağına karar ver (kızıştırıcı, aşk, utanç, derin, sosyal, eğlenceli). İstersen cevap süresi de ayarla.",
-    },
-    {
-      icon: ArrowRight,
-      title: "Telefonu elden ele gezdir",
-      text: "Sırası gelen oyuncu telefonu alır, adını görür, hazır olduğunda kartı çeker.",
-    },
-    {
-      icon: BookOpen,
-      title: "Soruyu dürüstçe cevapla",
-      text: "Açığa çıkarmak istemezsen pas geçme cezasını grup belirler (örn. bir yudum içki ya da ayağa kalkıp dans).",
-    },
-    {
-      icon: Pencil,
-      title: "Kartları özelleştir",
-      text: "Kendi gruba özel soruları ekle. JSON olarak yedekleyebilir, başka cihazda yükleyebilirsin.",
-    },
-  ];
-
-  return (
-    <div className="float-in">
-      <TopBar onBack={() => setView("home")} />
-      <h2 className="font-display font-bold text-4xl md:text-5xl mt-8 mb-8">
-        Nasıl oynanır
-      </h2>
-      <div className="space-y-4">
-        {steps.map((s, i) => {
-          const Icon = s.icon;
-          return (
-            <div
-              key={i}
-              className="flex gap-4 rounded-2xl border border-soft bg-soft p-5"
-            >
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center shrink-0">
-                <Icon className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <div className="font-display font-bold text-lg mb-1">{s.title}</div>
-                <div className="text-mute leading-relaxed">{s.text}</div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="mt-8 rounded-2xl border border-orange-400/20 bg-orange-400/5 p-5 text-sm leading-relaxed">
-        <div className="font-display font-bold text-orange-300 mb-2">Kural</div>
-        <p>
-          Bir soru bir oyun seansında sadece bir kez çıkar. Tüm sorular bitince oyun
-          kendi kendine biter. İstersen yeniden başlat.
-        </p>
       </div>
     </div>
   );
