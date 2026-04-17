@@ -175,7 +175,7 @@ function Home({
   toggleSound: () => void;
 }) {
   return (
-    <div className="min-h-[85vh] flex flex-col justify-between float-in">
+    <div className="min-h-[85vh] flex flex-col float-in">
       <div className="flex items-center justify-end gap-1.5">
         <IconToggle onClick={toggleSound} label={sound ? "Sesi kapat" : "Sesi aç"}>
           {sound ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
@@ -185,16 +185,7 @@ function Home({
         </IconToggle>
       </div>
 
-      <div className="py-16 md:py-24">
-        <h1 className="font-display font-black text-[clamp(3.5rem,14vw,9rem)] leading-[0.9]">
-          <span className="block">KIVIL</span>
-          <span className="block bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">
-            CIM
-          </span>
-        </h1>
-      </div>
-
-      <div className="space-y-3">
+      <div className="flex-1 flex flex-col justify-center gap-3 py-12">
         <button
           onClick={() => { sfx.tap(); vibrate(20); setView("setup"); }}
           className="w-full group relative overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 p-[1.5px] glow"
