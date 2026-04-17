@@ -16,9 +16,20 @@ export const storage = {
       localStorage.setItem(key, JSON.stringify(value));
     } catch {}
   },
+  remove(key: string) {
+    if (typeof window === "undefined") return;
+    try {
+      localStorage.removeItem(key);
+    } catch {}
+  },
 };
 
 export const KEYS = {
   questions: "kivilcim:questions",
   players: "kivilcim:players",
+  theme: "kivilcim:theme",
+  sound: "kivilcim:sound",
+  timer: "kivilcim:timer",
+  categories: "kivilcim:categories",
+  stats: "kivilcim:stats",
 };

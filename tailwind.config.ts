@@ -5,6 +5,7 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
       fontFamily: {
@@ -12,10 +13,13 @@ const config: Config = {
         body: ["Manrope", "sans-serif"],
       },
       colors: {
-        ink: "#0E0B14",
-        cream: "#F5E8D0",
-        mute: "#A39A8B",
-        muted2: "#5c5463",
+        ink: "var(--ink)",
+        cream: "var(--cream)",
+        mute: "var(--mute)",
+        muted2: "var(--muted2)",
+        surface: "var(--surface)",
+        "surface-2": "var(--surface-2)",
+        border: "var(--border)",
       },
     },
   },

@@ -4,10 +4,30 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Manrope:wght@400;500;600;700&display=swap");
 
+:root {
+  --ink: #0e0b14;
+  --cream: #f5e8d0;
+  --mute: #a39a8b;
+  --muted2: #5c5463;
+  --surface: #1a1420;
+  --surface-2: #211727;
+  --border: rgba(255, 255, 255, 0.1);
+}
+
+html.light {
+  --ink: #f7f2e8;
+  --cream: #1a1420;
+  --mute: #665f55;
+  --muted2: #9b9287;
+  --surface: #ffffff;
+  --surface-2: #f0ead9;
+  --border: rgba(0, 0, 0, 0.1);
+}
+
 html,
 body {
-  background: #0e0b14;
-  color: #f5e8d0;
+  background: var(--ink);
+  color: var(--cream);
   overscroll-behavior: none;
 }
 
@@ -29,6 +49,24 @@ body {
     radial-gradient(
       circle at 50% 90%,
       rgba(106, 44, 255, 0.08),
+      transparent 50%
+    );
+}
+
+html.light .grain {
+  background-image: radial-gradient(
+      circle at 20% 30%,
+      rgba(255, 107, 53, 0.18),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(226, 61, 128, 0.14),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 50% 90%,
+      rgba(106, 44, 255, 0.1),
       transparent 50%
     );
 }
@@ -96,6 +134,11 @@ body {
   mix-blend-mode: overlay;
 }
 
+html.light .noise::before {
+  opacity: 0.025;
+  mix-blend-mode: multiply;
+}
+
 input,
 textarea,
 button {
@@ -112,4 +155,43 @@ textarea:focus {
 .scroll-smooth::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 3px;
+}
+
+html.light .scroll-smooth::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* Tema-duyarlı yüzeyler */
+.bg-soft { background-color: color-mix(in srgb, var(--cream) 4%, transparent); }
+.bg-soft-2 { background-color: color-mix(in srgb, var(--cream) 7%, transparent); }
+.bg-soft-3 { background-color: color-mix(in srgb, var(--cream) 10%, transparent); }
+.border-soft { border-color: color-mix(in srgb, var(--cream) 10%, transparent); }
+.border-soft-2 { border-color: color-mix(in srgb, var(--cream) 15%, transparent); }
+.border-soft-3 { border-color: color-mix(in srgb, var(--cream) 30%, transparent); }
+.hover\:bg-soft-2:hover { background-color: color-mix(in srgb, var(--cream) 7%, transparent); }
+.hover\:bg-soft-3:hover { background-color: color-mix(in srgb, var(--cream) 10%, transparent); }
+.hover\:border-soft-3:hover { border-color: color-mix(in srgb, var(--cream) 30%, transparent); }
+
+@keyframes pulseRing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(255, 107, 53, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 53, 0);
+  }
+}
+.pulse-ring {
+  animation: pulseRing 1.2s ease-out infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-3px); }
+  40%, 80% { transform: translateX(3px); }
+}
+.shake {
+  animation: shake 0.4s ease-in-out;
 }

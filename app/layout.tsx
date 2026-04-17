@@ -25,6 +25,8 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
+const themeScript = `(function(){try{var t=localStorage.getItem('kivilcim:theme');if(t==='light'){document.documentElement.classList.add('light');}}catch(e){}})();`;
+
 export default function RootLayout({
   children,
 }: {
@@ -32,6 +34,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="tr">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>{children}</body>
     </html>
   );
